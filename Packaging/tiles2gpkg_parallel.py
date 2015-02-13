@@ -27,6 +27,8 @@
     Credits:
       MapProxy imaging functions: http://mapproxy.org
       gdal2mb on github: https://github.com/developmentseed/gdal2mb
+
+      Version: 2.0
 """
 
 from glob import glob
