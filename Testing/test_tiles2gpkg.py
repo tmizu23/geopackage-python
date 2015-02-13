@@ -25,7 +25,7 @@ Date: 2014-08
 Requires: Python Imaging Library (PIL or Pillow), Sqlite3
 Description: Test cases for tiles2gpkg_parallel.py
 
-Version:
+Version: 3.0
 """
 
 from math import pi
