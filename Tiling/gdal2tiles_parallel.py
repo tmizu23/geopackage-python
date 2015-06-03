@@ -267,6 +267,7 @@ class GlobalMercator(object):
 
         tx = int( math.ceil( px / float(self.tileSize) ) - 1 )
         ty = int( math.ceil( py / float(self.tileSize) ) - 1 )
+        
         return tx, ty
 
     def PixelsToRaster(self, px, py, zoom):
@@ -1207,7 +1208,8 @@ class GDAL2Tiles(object):
                 ti += 1
                 if (ti - 1) % self.options.processes != cpu:
                     continue
-                tilefilename = os.path.join(self.output, str(tz), str(tx), "%s.%s" % (ty, self.tileext))
+                #tilefilename = os.path.join(self.output, str(tz), str(tx), "%s.%s" % (ty, self.tileext))
+                tilefilename = os.path.join(self.output, str(tz), str(tx), "%s.%s" % ((2**tz-1)-ty, self.tileext))
                 if self.options.verbose:
                     print(ti,'/',tcount, tilefilename) #, "( TileMapService: z / x / y )"
 
@@ -1352,8 +1354,8 @@ class GDAL2Tiles(object):
                 ti += 1
                 if (ti - 1) % self.options.processes != cpu:
                     continue
-                tilefilename = os.path.join( self.output, str(tz), str(tx), "%s.%s" % (ty, self.tileext) )
-
+                #tilefilename = os.path.join( self.output, str(tz), str(tx), "%s.%s" % (ty, self.tileext) )
+                tilefilename = os.path.join(self.output, str(tz), str(tx), "%s.%s" % ((2**tz-1)-ty, self.tileext))
                 if self.options.verbose:
                     print(ti,'/',tcount, tilefilename) #, "( TileMapService: z / x / y )"
                 
@@ -1385,7 +1387,7 @@ class GDAL2Tiles(object):
                     for x in range(2*tx,2*tx+2):
                         minx, miny, maxx, maxy = self.tminmax[tz+1]
                         if x >= minx and x <= maxx and y >= miny and y <= maxy:
-                            dsquerytile = gdal.Open( os.path.join( self.output, str(tz+1), str(x), "%s.%s" % (y, self.tileext)), gdal.GA_ReadOnly)
+                            dsquerytile = gdal.Open( os.path.join( self.output, str(tz+1), str(x), "%s.%s" % ((2**(tz+1)-1)-y, self.tileext)), gdal.GA_ReadOnly)
                             if (ty==0 and y==1) or (ty!=0 and (y % (2*ty)) != 0):
                                 tileposy = 0
                             else:
